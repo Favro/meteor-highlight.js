@@ -1,6 +1,20 @@
 if(isIE8)
   return;
 
+var highlightOptions = {
+  highlight: function(code, lang) {
+    if (lang) {
+      try {
+        return hljs.highlight(lang, code).value;
+      } catch (error) {
+        return code;
+      }
+    } else {
+      return hljs.highlightAuto(code).value;
+    }
+  }
+};
+
 if (Package.markdown) {
   var decode;
 
@@ -52,17 +66,8 @@ if (Package.markdown) {
   };
 } else if (Package["chuangbo:marked"]) {
   var marked = Package['chuangbo:marked'].marked;
-  marked.setOptions({
-    highlight: function(code, lang) {
-      if (lang) {
-        try {
-          return hljs.highlight(lang, code).value;
-        } catch (error) {
-          return code;
-        }
-      } else {
-        return hljs.highlightAuto(code).value;
-      }
-    }
-  });
+  marked.setOptions(highlightOptions);
+} else if (Package['hansoft:markdown-it']) {
+  var markdownIt = Package['hansoft:markdown-it'].markdownIt;
+  markdownIt.set(highlightOptions);
 }

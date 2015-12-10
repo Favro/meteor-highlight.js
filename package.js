@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.addFiles("markdown-integration.js");
   api.addFiles("github.css");
   api.use([
+    "hansoft:markdown-it@5.0.2",
     "chuangbo:marked@0.3.5_1",
     "markdown@1.0.2"
   ], ["client", "server"], {weak: true});
